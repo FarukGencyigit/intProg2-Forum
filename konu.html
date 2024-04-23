@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yorumlar</title>
+
+    <link rel="stylesheet" href="css/footer.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .yukari-bar {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        #commentInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+
+ 
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .yorum {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .kullanici {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .comment-ts {
+            font-style: italic;
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .yorum-icerik {
+            margin-top: 10px;
+        }
+
+        button.yorum-sil {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            float: right;
+        }
+
+        button.yorum-sil:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="yukari-bar"> 
+        <h1> Konu ve Yorumlar </h1>
+    </div>
+    <div class="main">
+        <div class="header">
+            <textarea id="commentInput" placeholder="Yorumunuzu buraya yazınız"></textarea>
+            <button> Yorum Ekle </button>
+            <div class="yorumlar"></div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        console.log(threads);
+        var id = window.location.search.slice(1);
+        var konu = threads.find(t => t.id == id);
+        var yorumlar = document.querySelector('.yorumlar');
+
+        // Sayfa yüklendiğinde başlığı güncelle
+        document.querySelector('.yukari-bar h1').innerText = konu.title;
+
+        function yorumEkle(yorum) {
+            var yorumHtml = `
+                <div class="yorum"> 
+                    <div class="top-comment">
+                        <p class="kullanici"> ${yorum.author} </p>
+                        <p class="comment-ts"> ${new Date(yorum.date).toLocaleString()} </p>
+                        <button onclick="yorumSil(${konu.yorumlar.indexOf(yorum)})">Yorumu Sil</button>
+                    </div>
+                    <div class="yorum-icerik"> ${yorum.content} </div>
+                </div>
+            `;
+            yorumlar.insertAdjacentHTML('beforeend', yorumHtml);
+        }
+
+        function yorumSil(index) {
+            konu.yorumlar.splice(index, 1);
+            localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+            guncelYorumlariGoster();
+        }
+
+        function guncelYorumlariGoster() {
+            yorumlar.innerHTML = '';
+            konu.yorumlar.forEach(yorum => {
+                yorumEkle(yorum);
+            });
+        }
+
+        function yeniYorumEkle() {
+            var txt = document.querySelector('#commentInput');
+            var yorum = {
+                content: txt.value,
+                date: Date.now(),
+                author: 'Ziyaretçi'
+            };
+            konu.yorumlar.push(yorum);
+            localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+            guncelYorumlariGoster();
+            txt.value = '';
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            var storedThread = localStorage.getItem(`thread_${id}`);
+            if (storedThread) {
+                konu = JSON.parse(storedThread);
+                guncelYorumlariGoster();
+            }
+        });
+
+        var btn = document.querySelector('button');
+        btn.addEventListener('click', yeniYorumEkle);
+    </script>
+
+<footer>
+    <div class="container">
+      <ul style="color: white;">
+        <li style="color: white;"><a href="#">home</a></li>
+        <li><a style="color: white;" href="#">about us</a></li>
+        <li><a  style="color: white;" href="#">terms of use</a></li>
+        <li><a href="#">privacy policy</a></li>
+        <li><a href="#">help</a></li>
+        <li><a href="#">business directory</a></li>
+        <li><a href="#">contact us</a></li>
+        <li><a href="#">grow your business</a></li>
+      </ul>
+      <p style="color: white;">
+        When you purchase through links on our site, we may earn an affiliate
+        commission, which supports our community.
+      </p>
+      <p style="color: white;">The Fora platform includes forum software by XenForo.</p>
+      <p style="color: white;">
+        hondashadow.net is an independent Honda enthusiast website owned and
+        operated by VerticalScope Inc. Content on hondashadow.net is generated
+        by its users. hondashadow.net is not in any way affiliated with Honda
+        Motor Company
+      </p>
+      <p style="color: white;">
+        VerticalScope Inc., 111 Peter Street, Suite 600, Toronto, Ontario, M5V
+        2H1, Canada
+      </p>
+    </div>
+  </footer>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+    <style> /*
+
+textarea{
+    width: 75%;
+    height: 50px;
+}   
+.kullanici{
+    font-size: 15px;
+    font-style:italic;
+}
+button{
+    display: block;
+    margin: 10 0px;
+} 
+.yorumlar{
+    margin: 40px 0;
+}
+
+
+.yorum{
+margin: 35px 0;
+
+}
+
+body {
+        margin: 10 60px;
+    }
+    a {
+        text-decoration:none;
+        color: black;
+    }
+    .main{
+        background-color: #f6f6ef;
+        padding: 10 40px;
+        color: purple;
+    }
+    h4, h1, ol{
+        margin: 0;
+    }
+    .bottom , .top-comment{
+        display: flex;
+        color: grey;
+        font-size: 12px;
+    }
+    zaman {
+        padding-right: 7px;
+    }
+    .yukari-bar{
+
+        background-color: violet;
+        padding: 0 40px;
+    }
+    .sira{
+
+        padding: 5px;
+        color: purple;
+    }
+    p{
+        margin: 5px;
+    }
+
+    .title{
+        margin: 0px;
+        font-size: 25px;
+        font-style: normal;
+        color: purple;
+
+
+    }
+    .header{
+        margin: 0px;
+        
+    }
+    */
+    </style>
+
+</body>

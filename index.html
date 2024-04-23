@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/general.css" />
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <title>Document</title>
+  </head>
+  <body background="earth-from-space-space-1080x1920.jpg">
+    <header class="header" id="header">
+      <div class="row">
+        <div class="container">
+          <div class="header-content">
+            <div class="logo">
+              <a href="index.html"
+              ><img src="img/earth-from-space-space-1080x1920.jpg" alt="logo"
+            /></a>
+            </div>
+            <div class="nav-search">
+              <div class="form-group">
+                <input type="text" placeholder="Toplulukta Arayın" />
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+            </div>
+            <div class="nav-group">
+              <ul>
+                <li>
+                  <a href="#"><i class="fa-solid fa-comment"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa-solid fa-list-ul"></i></a>
+                </li>
+                <li class="join">
+                  <a href="#">
+                    <i class="fa-solid fa-user"></i>
+                    <span>login / join</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main style="background-color: fade(#FFFFFF, 5%)">
+      <div class="container">
+        <div class="row">
+          <section class="left">
+            <h2>Sizin için önerilen gezegenler:</h2>
+            <div class="inner-left">
+              
+              <div class="box">
+          
+                
+              <ol class="inner-left">
+
+              
+              </ol>
+            </div>
+              <script src="data.js"></script>   
+<script>
+    console.log(threads);
+    var container = document.querySelector('ol')
+    for (let konu of threads ){
+        var html = `
+        <li style="margin-top:"50px">  
+    <a style="margin-top:"10px" href="konu.html ?${konu.id}"> 
+    <h4 style="margin-top:50px"> ${konu.title} </h4> 
+    
+    
+    <div class="box"> 
+        <p> ${new Date(konu.date).toLocaleString()} </p> 
+        <p> <br> <br> ${konu.yorumlar.length} yorumlar </p> 
+    
+    </div>
+    </a>
+    
+    </li>
+    `
+    container.insertAdjacentHTML('beforeend',html)
+    }
+</script>
+              
+            </div>
+          </section>
+          <section class="right">
+            <div class="box first">
+              <h3>Uzay ve Ötesi</h3>
+              <span>2024'ten beri</span>
+              <p>
+                Hoşgeldiniz forumumuza.
+              </p>
+              <div class="stats">
+                <div>
+                  <h4>Bir çok</h4>
+                  <span>Post</span>
+                </div>
+                <div>
+                  <h4>Çok sayıda</h4>
+                  <span>Ziyaretçi</span>
+                </div>
+              </div>
+              <div class="buttons">
+                <a href="#" class="btn btn-red"
+                  ><i class="fa-solid fa-user-large"></i> siz de katılın</a
+                >
+                <a href="#" class="btn btn-white"
+                  ><i class="fa-solid fa-store"></i> işletmenizi büyütün</a
+                >
+              </div>
+            </div>
+            <div class="box top-forums">
+              <h3>Top forumlar</h3>
+              <a href="#">Hepsini görün <i class="fa-solid fa-arrow-right"></i></a>
+              <div class="inner-box">
+                <h4><a href="#">Genel</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Dünya</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Güneş</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Dış uzay</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Satürn</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box top-contributors">
+              <h3>en çok katkıda bulunanlar</h3>
+              <a href="#">Hepsini gör <i class="fa-solid fa-arrow-right"></i></a>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Admin</a>
+                  <span>350 yorum</span>
+                </div>
+              </div>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Ziyaretçi</a>
+                  <span>196 yorum</span>
+                </div>
+              </div>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Ziyaretçi</a>
+                  <span>100 yorum</span>
+                </div>
+              </div>
+            </div>
+            <div class="box recommended-communities">
+              <h3>önerilen topluluklar</h3>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">JDünya topluluğu</a>
+                  <span>715k+ Ziyaretçi</span>
+                </div>
+              </div>
+              <div class="inner-box">
+               
+                <div class="details">
+                  <a href="#">Uzay Severler topluluğu</a>
+                  <span>1.5M+ Ziyaretçi</span>
+                </div>
+              </div>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Yıldızlar topluluğu</a>
+                  <span>1m+ Ziyaretçi</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <ul>
+          <li><a href="#">Ana Sayda</a></li>
+          <li><a href="#">hakkımızda</a></li>
+          <li><a href="#">Kullanım şartları</a></li>
+          <li><a href="#">Yardım</a></li>
+          <li><a href="#">İletişimi geçin</a></li>
+          
+        </ul>
+       
+        <p>Bir Faruk kuruluşudur.</p>
+        <p>
+          Uzay ve Ötesi her şeyi konuşabileceğiniz ama genellikle uzayla alakalı bir topluluktur
+        </p>
+        <p>
+          Kayseri/Türkiye
+        </p>
+      </div>
+    </footer>
+    <div class="overlay">
+      <div class="login" id="login">
+        <div class="top">
+          <h2>Log in</h2>
+          <i class="fa-solid fa-xmark close"></i>
+        </div>
+        <div class="row">
+          <div class="content">
+            <div class="login-left">
+              <form action="#">
+                <input type="text" placeholder="Username" />
+                <div class="form-group">
+                  <input type="password" placeholder="Password" />
+                  <div><i class="fa-regular fa-eye"></i> <span>Show</span></div>
+                </div>
+                <a href="#">Forget your password?</a>
+                <div class="remember">
+                  <input type="checkbox" name="remember" value="1" checked />
+                  <label for="remember">Stay logged in</label>
+                </div>
+                <button type="submit" class="btn btn-red">Log in</button>
+              </form>
+            </div>
+            <div class="line"></div>
+            <div class="login-right">
+              <a href="#" class="btn"
+                ><i class="fa-brands fa-square-facebook"></i>
+                <span>Login with Facebook</span></a
+              >
+              <a href="#" class="btn"
+                ><img src="img/download.png" /><span>
+                  Login with Google</span
+                ></a
+              >
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://kit.fontawesome.com/9e5ba2e3f5.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/index.js"></script>
+  
+    <style>
+    
+    
+   
+
+     
+      
+          
+    
+      
+        
+          body {
+           
+           margin-right: 50px;
+            margin-left:50px;
+          }
+          a {
+              text-decoration:none;
+              color: purple;
+              
+          }
+          
+              
+          
+        
+                  
+          </style> 
+      
+  
+  
+  
+  
+  </body>
+</html>
