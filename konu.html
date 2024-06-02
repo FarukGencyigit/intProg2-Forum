@@ -1,191 +1,582 @@
 <!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yorumlar</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/general.css" />
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <title>Document</title>
+  </head>
+  <body background="earth-from-space-space-1080x1920.jpg">
+    <header class="header" id="header">
+      <div class="row">
+        <div class="container">
+          <div class="header-content">
 
-    <link rel="stylesheet" href="css/footer.css">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .yukari-bar {
-            background-color: #333;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            margin-bottom: 20px;
-        }
-
-        #commentInput {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            resize: vertical;
-        }
-
-
- 
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .yorum {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .kullanici {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .comment-ts {
-            font-style: italic;
-            font-size: 0.8em;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .yorum-icerik {
-            margin-top: 10px;
-        }
-
-        button.yorum-sil {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            float: right;
-        }
-
-        button.yorum-sil:hover {
-            background-color: #c82333;
-        }
-    </style>
-</head>
-<body>
-    <div class="yukari-bar"> 
-        <h1> Konu ve Yorumlar </h1>
-    </div>
-    <div class="main">
-        <div class="header">
-            <textarea id="commentInput" placeholder="Yorumunuzu buraya yazınız"></textarea>
-            <button> Yorum Ekle </button>
-            <div class="yorumlar"></div>
+            <div class="logo">
+              <a href="index.html"
+              ><img src="img/earth-from-space-space-1080x1920.jpg" alt="logo"
+            /></a>
+            </div>
+            <div class="nav-search">
+              <div class="form-group">
+                <input type="text" placeholder="Toplulukta Arayın" />
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+            </div>
+            <div class="nav-group">
+              <ul>
+                <li>
+                  <a href="#"><i class="fa-solid fa-comment"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa-solid fa-list-ul"></i></a>
+                </li>
+                <li class="join">
+                  <a href="#">
+                    <i class="fa-solid fa-user"></i>
+                    <span>login / join</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-
-    <script src="data.js"></script>
-    <script>
-        console.log(threads);
-        var id = window.location.search.slice(1);
-        var konu = threads.find(t => t.id == id);
-        var yorumlar = document.querySelector('.yorumlar');
-
-        // Sayfa yüklendiğinde başlığı güncelle
-        document.querySelector('.yukari-bar h1').innerText = konu.title;
-
-        function yorumEkle(yorum) {
-            var yorumHtml = `
-                <div class="yorum"> 
-                    <div class="top-comment">
-                        <p class="kullanici"> ${yorum.author} </p>
-                        <p class="comment-ts"> ${new Date(yorum.date).toLocaleString()} </p>
-                        <button onclick="yorumSil(${konu.yorumlar.indexOf(yorum)})">Yorumu Sil</button>
-                    </div>
-                    <div class="yorum-icerik"> ${yorum.content} </div>
-                </div>
-            `;
-            yorumlar.insertAdjacentHTML('beforeend', yorumHtml);
-        }
-
-        function yorumSil(index) {
-            konu.yorumlar.splice(index, 1);
-            localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
-            guncelYorumlariGoster();
-        }
-
-        function guncelYorumlariGoster() {
-            yorumlar.innerHTML = '';
-            konu.yorumlar.forEach(yorum => {
-                yorumEkle(yorum);
-            });
-        }
-
-        function yeniYorumEkle() {
-            var txt = document.querySelector('#commentInput');
-            var yorum = {
-                content: txt.value,
-                date: Date.now(),
-                author: 'Ziyaretçi'
-            };
-            konu.yorumlar.push(yorum);
-            localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
-            guncelYorumlariGoster();
-            txt.value = '';
-        }
-
-        window.addEventListener('DOMContentLoaded', function() {
-            var storedThread = localStorage.getItem(`thread_${id}`);
-            if (storedThread) {
-                konu = JSON.parse(storedThread);
-                guncelYorumlariGoster();
-            }
-        });
-
-        var btn = document.querySelector('button');
-        btn.addEventListener('click', yeniYorumEkle);
-    </script>
-
-<footer>
-    <div class="container">
-      <ul>
-        <li style="color: white;"><a href="#">Ana Sayda</a></li>
-        <li style="color: white;"><a href="#">hakkımızda</a></li>
-        <li style="color: white;"><a href="#">Kullanım şartları</a></li>
-        <li style="color: white;"><a href="#">Yardım</a></li>
-        <li style="color: white;"><a href="#">İletişimi geçin</a></li>
+      </div>
+    </header> 
+    <main style= "background-color:rgb(19, 17, 17)">
+      <div class="container">
+        <div class="row" style= "background-color:rgb(19, 17, 17)">
+          <section class="left">
+            
+            <div class="inner-left" style= "background-color:rgb(19, 17, 17)">
+              
+             
+              <script src="data.js"></script>   
+              <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                }
         
-      </ul>
-     
-      <p style="color: white;">Bir Faruk kuruluşudur.</p>
-      <p style="color: white;">
-        Uzay ve Ötesi her şeyi konuşabileceğiniz ama genellikle uzayla alakalı bir topluluktur
-      </p>
-      <p style="color: white;">
-        Kayseri/Türkiye
-      </p>
+                .yukari-bar {
+                    background-color: #333;
+                    color: white;
+                    padding: 20px 0;
+                    text-align: center;
+                }
+        
+                .main {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+        
+                .header2 {
+                    margin-bottom: 20px;
+                }
+        
+                #commentInput {
+                    width: 100%;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    resize: vertical;
+                }
+        
+                button {
+                    background-color: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                }
+        
+                button:hover {
+                    background-color: #0056b3;
+                }
+        
+                .yorum {
+                    border: 1px solid #ccc;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    color: white;
+                }
+        
+                .kullanici {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    color: white;
+                }
+        
+                .comment-ts {
+                    font-style: italic;
+                    font-size: 0.8em;
+                    color: #666;
+                    margin-bottom: 10px;
+                    color: white;
+                }
+        
+                .yorum-icerik {
+                    margin-top: 10px;
+                    color: white;
+                }
+        
+                .cevap {
+                    margin-left: 20px;
+                    border-left: 1px solid #ccc;
+                    padding-left: 10px;
+                    color: white;
+                }
+        
+                button.yorum-sil,
+                button.cevap-sil {
+                    background-color: #dc3545;
+                    color: white;
+                    border: none;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                    float: right;
+                    margin-left: 10px;
+                }
+        
+                button.yorum-sil:hover,
+                button.cevap-sil:hover {
+                    background-color: #c82333;
+                }
+            </style>
+        
+        <body>
+            <div class="yukari-bar"> 
+                <h1> Konu ve Yorumlar </h1>
+            </div>
+            <div class="main">
+                <div class="header2">
+                    <textarea id="commentInput" placeholder="Yorumunuzu buraya yazınız"></textarea>
+                    <button onclick="yeniYorumEkle()"> Yorum Ekle </button>
+                    <div class="yorumlar"></div>
+                </div>
+            </div>
+        
+            <script src="data.js"></script>
+            <script>
+                console.log(threads);
+                var id = window.location.search.slice(1);
+                var konu = threads.find(t => t.id == id);
+                var yorumlar = document.querySelector('.yorumlar');
+        
+                // Sayfa yüklendiğinde başlığı güncelle
+                document.querySelector('.yukari-bar h1').innerText = konu.title;
+        
+                function yorumEkle(yorum, yorumIndex) {
+                    var yorumHtml = `
+                        <div class="yorum"> 
+                            <div class="top-comment">
+                                <p class="kullanici"> ${yorum.author} </p>
+                                <p class="comment-ts"> ${new Date(yorum.date).toLocaleString()} </p>
+                                <button onclick="yorumSil(${yorumIndex})">Yorumu Sil</button>
+                                <button onclick="cevapFormuGoster(${yorumIndex})">Yanıtla</button>
+                            </div>
+                            <div class="yorum-icerik"> ${yorum.content} </div>
+                            <div id="cevapForm_${yorumIndex}" style="display: none;">
+                                <textarea class="cevapInput" placeholder="Yanıtınızı buraya yazınız"></textarea>
+                                <button onclick="cevapEkle(${yorumIndex})">Gönder</button>
+                            </div>
+                            <div class="cevaplar" id="cevaplar_${yorumIndex}"></div>
+                        </div>
+                    `;
+                    yorumlar.insertAdjacentHTML('beforeend', yorumHtml);
+                    yorum.cevaplar.forEach((cevap, cevapIndex) => {
+                        cevapEkleHTML(cevap, yorumIndex, cevapIndex);
+                    });
+                }
+        
+                function cevapEkleHTML(cevap, yorumIndex, cevapIndex) {
+                    var cevaplarDiv = document.getElementById(`cevaplar_${yorumIndex}`);
+                    var cevapHtml = `
+                        <div class="cevap"> 
+                            <p class="kullanici"> ${cevap.author} </p>
+                            <p class="comment-ts"> ${new Date(cevap.date).toLocaleString()} </p>
+                            <p class="cevap-icerik"> ${cevap.content} </p>
+                            <button onclick="cevapSil(${yorumIndex}, ${cevapIndex})">Cevabı Sil</button>
+                            <button onclick="cevapFormuGoster(${yorumIndex}, ${cevapIndex})">Yanıtla</button>
+                            <div id="altCevapForm_${yorumIndex}_${cevapIndex}" style="display: none;">
+                                <textarea class="cevapInput" placeholder="Yanıtınızı buraya yazınız"></textarea>
+                                <button onclick="altCevapEkle(${yorumIndex}, ${cevapIndex})">Gönder</button>
+                            </div>
+                            <div class="altCevaplar" id="altCevaplar_${yorumIndex}_${cevapIndex}"></div>
+                        </div>
+                    `;
+                    cevaplarDiv.insertAdjacentHTML('beforeend', cevapHtml);
+                    cevap.cevaplar.forEach((altCevap, altCevapIndex) => {
+                        altCevapEkleHTML(altCevap, yorumIndex, cevapIndex, altCevapIndex);
+                    });
+                }
+        
+                function altCevapEkleHTML(altCevap, yorumIndex, cevapIndex, altCevapIndex) {
+                    var altCevaplarDiv = document.getElementById(`altCevaplar_${yorumIndex}_${cevapIndex}`);
+                    var altCevapHtml = `
+                        <div class="cevap"> 
+                            <p class="kullanici"> ${altCevap.author} </p>
+                            <p class="comment-ts"> ${new Date(altCevap.date).toLocaleString()} </p>
+                            <p class="cevap-icerik"> ${altCevap.content} </p>
+                            <button onclick="altCevapSil(${yorumIndex}, ${cevapIndex}, ${altCevapIndex})">Cevabı Sil</button>
+                            <button onclick="cevapFormuGoster(${yorumIndex}, ${cevapIndex}, ${altCevapIndex})">Yanıtla</button>
+                            <div id="altCevapForm_${yorumIndex}_${cevapIndex}_${altCevapIndex}" style="display: none;">
+                                <textarea class="cevapInput" placeholder="Yanıtınızı buraya yazınız"></textarea>
+                                <button onclick="altCevapEkle(${yorumIndex}, ${cevapIndex}, ${altCevapIndex})">Gönder</button>
+                            </div>
+                            <div class="altCevaplar" id="altCevaplar_${yorumIndex}_${cevapIndex}_${altCevapIndex}"></div>
+                        </div>
+                    `;
+                    altCevaplarDiv.insertAdjacentHTML('beforeend', altCevapHtml);
+                }
+        
+                function cevapFormuGoster(yorumIndex, cevapIndex = null, altCevapIndex = null) {
+                    var cevapForm;
+                    if (cevapIndex === null) {
+                        cevapForm = document.getElementById(`cevapForm_${yorumIndex}`);
+                    } else if (altCevapIndex === null) {
+                        cevapForm = document.getElementById(`altCevapForm_${yorumIndex}_${cevapIndex}`);
+                    } else {
+                        cevapForm = document.getElementById(`altCevapForm_${yorumIndex}_${cevapIndex}_${altCevapIndex}`);
+                    }
+                    cevapForm.style.display = 'block';
+                }
+        
+                function cevapEkle(yorumIndex, cevapIndex = null) {
+                    var cevapInput;
+                    if (cevapIndex === null) {
+                        cevapInput = document.querySelector(`#cevapForm_${yorumIndex} .cevapInput`);
+                    } else {
+                        cevapInput = document.querySelector(`#altCevapForm_${yorumIndex}_${cevapIndex} .cevapInput`);
+                    }
+                    var cevap = {
+                        content: cevapInput.value,
+                        date: Date.now(),
+                        author: 'Ziyaretçi',
+                        cevaplar: [] // yeni cevap için alt cevaplar dizisi oluşturuluyor
+                    };
+                    if (cevapIndex === null) {
+                        konu.yorumlar[yorumIndex].cevaplar.push(cevap);
+                    } else {
+                        konu.yorumlar[yorumIndex].cevaplar[cevapIndex].cevaplar.push(cevap);
+                    }
+                    localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+                    cevapInput.value = '';
+                    cevapEkleHTML(cevap, yorumIndex, konu.yorumlar[yorumIndex].cevaplar.length - 1);
+                }
+        
+                function altCevapEkle(yorumIndex, cevapIndex, altCevapIndex = null) {
+                    var altCevapInput;
+                    if (altCevapIndex === null) {
+                        altCevapInput = document.querySelector(`#altCevapForm_${yorumIndex}_${cevapIndex} .cevapInput`);
+                    } else {
+                        altCevapInput = document.querySelector(`#altCevapForm_${yorumIndex}_${cevapIndex}_${altCevapIndex} .cevapInput`);
+                    }
+                    var altCevap = {
+                        content: altCevapInput.value,
+                        date: Date.now(),
+                        author: 'Ziyaretçi'
+                    };
+                    konu.yorumlar[yorumIndex].cevaplar[cevapIndex].cevaplar.push(altCevap);
+                    localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+                    altCevapInput.value = '';
+                    altCevapEkleHTML(altCevap, yorumIndex, cevapIndex, konu.yorumlar[yorumIndex].cevaplar[cevapIndex].cevaplar.length - 1);
+                }
+        
+                function cevapSil(yorumIndex, cevapIndex) {
+                    konu.yorumlar[yorumIndex].cevaplar.splice(cevapIndex, 1);
+                    localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+                    guncelYorumlariGoster();
+                }
+        
+                function altCevapSil(yorumIndex, cevapIndex, altCevapIndex) {
+                    konu.yorumlar[yorumIndex].cevaplar[cevapIndex].cevaplar.splice(altCevapIndex, 1);
+                    localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+                    guncelYorumlariGoster();
+                }
+        
+                function yorumSil(index) {
+                    konu.yorumlar.splice(index, 1);
+                    localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+                    guncelYorumlariGoster();
+                }
+        
+                function guncelYorumlariGoster() {
+                    yorumlar.innerHTML = '';
+                    konu.yorumlar.forEach((yorum, index) => {
+                        yorumEkle(yorum, index);
+                    });
+                }
+        
+                function yeniYorumEkle() {
+                    var txt = document.querySelector('#commentInput');
+                    var yorum = {
+                        content: txt.value,
+                        date: Date.now(),
+                        author: 'Ziyaretçi',
+                        cevaplar: [] // yeni yorum için cevaplar dizisi oluşturuluyor
+                    };
+                    konu.yorumlar.push(yorum);
+                    localStorage.setItem(`thread_${id}`, JSON.stringify(konu));
+                    guncelYorumlariGoster();
+                    txt.value = '';
+                }
+        
+                window.addEventListener('DOMContentLoaded', function() {
+                    var storedThread = localStorage.getItem(`thread_${id}`);
+                    if (storedThread) {
+                        konu = JSON.parse(storedThread);
+                        guncelYorumlariGoster();
+                    }
+                });
+            </script>
+              
+            </div>
+          </section>
+          <section class="right">
+            <div class="box first">
+              <h3>Uzay ve Ötesi</h3>
+              <span>2024'ten beri</span>
+              <p>
+                Hoşgeldiniz forumumuza.
+              </p>
+              <div class="stats">
+                <div>
+                  <h4>Bir çok</h4>
+                  <span>Post</span>
+                </div>
+                <div>
+                  <h4>Çok sayıda</h4>
+                  <span>Ziyaretçi</span>
+                </div>
+              </div>
+              <div class="buttons">
+                <a href="#" class="btn btn-red"
+                  ><i class="fa-solid fa-user-large"></i> siz de katılın</a
+                >
+                <a href="#" class="btn btn-white"
+                  ><i class="fa-solid fa-store"></i> işletmenizi büyütün</a
+                >
+              </div>
+            </div>
+            <div class="box top-forums">
+              <h3>Top forumlar</h3>
+              <a href="#">Hepsini görün <i class="fa-solid fa-arrow-right"></i></a>
+              <div class="inner-box">
+                <h4><a href="#">Genel</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Dünya</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Güneş</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Dış uzay</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+              <div class="inner-box">
+                <h4><a href="#">Satürn</a></h4>
+                <div class="stats">
+                  <div class="stat comments">
+                    <i class="fa-solid fa-comment"></i><span> Çok sayıda</span>
+                  </div>
+                  <div class="stat views">
+                    <i class="fa-regular fa-eye"></i><span>Bir çok</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="box top-contributors">
+              <h3>en çok katkıda bulunanlar</h3>
+              <a href="#">Hepsini gör <i class="fa-solid fa-arrow-right"></i></a>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Admin</a>
+                  <span>350 yorum</span>
+                </div>
+              </div>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Ziyaretçi</a>
+                  <span>196 yorum</span>
+                </div>
+              </div>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Ziyaretçi</a>
+                  <span>100 yorum</span>
+                </div>
+              </div>
+            </div>
+            <div class="box recommended-communities">
+              <h3>önerilen topluluklar</h3>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">JDünya topluluğu</a>
+                  <span>715k+ Ziyaretçi</span>
+                </div>
+              </div>
+              <div class="inner-box">
+               
+                <div class="details">
+                  <a href="#">Uzay Severler topluluğu</a>
+                  <span>1.5M+ Ziyaretçi</span>
+                </div>
+              </div>
+              <div class="inner-box">
+                
+                <div class="details">
+                  <a href="#">Yıldızlar topluluğu</a>
+                  <span>1m+ Ziyaretçi</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="container">
+        <ul>
+          <li><a href="#">Ana Sayda</a></li>
+          <li><a href="#">hakkımızda</a></li>
+          <li><a href="#">Kullanım şartları</a></li>
+          <li><a href="#">Yardım</a></li>
+          <li><a href="#">İletişimi geçin</a></li>
+          
+        </ul>
+       
+        <p>Bir Faruk kuruluşudur.</p>
+        <p>
+          Uzay ve Ötesi her şeyi konuşabileceğiniz ama genellikle uzayla alakalı bir topluluktur
+        </p>
+        <p>
+          Kayseri/Türkiye
+        </p>
+      </div>
+    </footer>
+    <div class="overlay">
+      <div class="login" id="login">
+        <div class="top">
+          <h2>Log in</h2>
+          <i class="fa-solid fa-xmark close"></i>
+        </div>
+        <div class="row">
+          <div class="content">
+            <div class="login-left">
+              <form action="#">
+                <input type="text" placeholder="Username" />
+                <div class="form-group">
+                  <input type="password" placeholder="Password" />
+                  <div><i class="fa-regular fa-eye"></i> <span>Show</span></div>
+                </div>
+                <a href="#">Forget your password?</a>
+                <div class="remember">
+                  <input type="checkbox" name="remember" value="1" checked />
+                  <label for="remember">Stay logged in</label>
+                </div>
+                <button type="submit" class="btn btn-red">Log in</button>
+              </form>
+            </div>
+            <div class="line"></div>
+            <div class="login-right">
+              <a href="#" class="btn"
+                ><i class="fa-brands fa-square-facebook"></i>
+                <span>Login with Facebook</span></a
+              >
+              <a href="#" class="btn"
+                ><img src="img/download.png" /><span>
+                  Login with Google</span
+                ></a
+              >
+            </div>
+          </div>
+          
+        </div>
+      </div>
     </div>
-  </footer>
+    <script
+      src="https://kit.fontawesome.com/9e5ba2e3f5.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/index.js"></script>
+  
+    <style>
+    
+    
+   
 
-
-</body>
+     
+      
+          
+    
+      
+        
+          body {
+           
+           margin-right: 50px;
+            margin-left:50px;
+          }
+          a {
+              text-decoration:none;
+              color: purple;
+              
+          }
+          
+              
+          
+        
+                  
+          </style> 
+      
+  
+  
+  
+  
+  </body>
 </html>
 
 
@@ -193,82 +584,5 @@
 
 
 
-
-
-    <style> /*
-
-textarea{
-    width: 75%;
-    height: 50px;
-}   
-.kullanici{
-    font-size: 15px;
-    font-style:italic;
-}
-button{
-    display: block;
-    margin: 10 0px;
-} 
-.yorumlar{
-    margin: 40px 0;
-}
-
-
-.yorum{
-margin: 35px 0;
-
-}
-
-body {
-        margin: 10 60px;
-    }
-    a {
-        text-decoration:none;
-        color: black;
-    }
-    .main{
-        background-color: #f6f6ef;
-        padding: 10 40px;
-        color: purple;
-    }
-    h4, h1, ol{
-        margin: 0;
-    }
-    .bottom , .top-comment{
-        display: flex;
-        color: grey;
-        font-size: 12px;
-    }
-    zaman {
-        padding-right: 7px;
-    }
-    .yukari-bar{
-
-        background-color: violet;
-        padding: 0 40px;
-    }
-    .sira{
-
-        padding: 5px;
-        color: purple;
-    }
-    p{
-        margin: 5px;
-    }
-
-    .title{
-        margin: 0px;
-        font-size: 25px;
-        font-style: normal;
-        color: purple;
-
-
-    }
-    .header{
-        margin: 0px;
-        
-    }
-    */
-    </style>
 
 </body>

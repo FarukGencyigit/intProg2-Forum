@@ -16,10 +16,15 @@ yorumlar: [
     author: "Ali",
     date: Date.now(),
     content: "Merhaba",
+},
+
+{
+    cevaplar: "evet"
 }
 
 
 ]
+
 
 },
 {
